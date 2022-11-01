@@ -1,5 +1,5 @@
 from rest_framework_simplejwt.tokens import RefreshToken
-from requests import Response
+from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.authtoken.models import Token
@@ -12,10 +12,6 @@ from config.mixins import ListAPIViewResponseMixin, RetrieveAPIViewResponseMixin
 from config.responses import ResponseSuccess, ResponseFail
 from .models import User
 from .serializer import RegistrationSerializer, LoginSerializer, ChangePasswordSerializer, UserEditSerialzier, UserSerializer
-
-
-
-
 
 
 

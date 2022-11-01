@@ -29,22 +29,22 @@ class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
     use_in_migrations = True
 
-    def _create_user(self, phone, password, **extra_fields):
+    def _create_user(self, language, password, **extra_fields):
         """Create and save a User with the given phone and password."""
-        if not phone:
+        if not language:
             raise ValueError('The given phone must be set')
-        user = self.model(phone=phone, **extra_fields)
+        user = self.model(language=language, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_user(self, phone, password=None, **extra_fields):
+    def create_user(self, language, password=None, **extra_fields):
         """Create and save a regular User with the given phone and password."""
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
-        return self._create_user(phone, password, **extra_fields)
+        return self._create_user(language, password, **extra_fields)
 
-    def create_superuser(self, phone, password, **extra_fields):
+    def create_superuser(self, language, password, **extra_fields):
         """Create and save a SuperUser with the given phone and password."""
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
@@ -52,22 +52,25 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have is_staff=True.')
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
-        return self._create_user(phone, password, **extra_fields)
+        return self._create_user(language, password, **extra_fields)
 
 
 class User(AbstractUser, PermissionsMixin):
-    username = models.CharField(max_length=100, unique=True)
+    username = models.CharField(max_length=100, unique=True, null=True, blank=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    middle_name = models.CharField(max_length=100, null=True)
-    phone = models.CharField(max_length=13, unique=True)
-    birth_date = models.DateField(null=True, blank=True)
-    image = models.ImageField(upload_to='user_images/', blank=True, null=True)
+    title = models.CharField(max_length=100, null=True)
+    language = models.CharField(max_length=13, unique=True)
+    description = models.CharField(max_length=255)
+    avatar = models.ImageField(upload_to='user_images/', blank=True, null=True)
+    location = models.CharField(max_length=255)
+
+
 
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'phone'
+    USERNAME_FIELD = 'language'
     REQUIRED_FIELDS = []
 
     def __str__(self):

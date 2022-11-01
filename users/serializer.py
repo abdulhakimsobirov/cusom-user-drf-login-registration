@@ -8,7 +8,7 @@ from users.models import User
 class RegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'phone', 'password')
+        fields = ('first_name', 'last_name', 'title', 'description', 'email', 'password', 'language', 'location')
 
     def create(self, validated_data):
         password = validated_data.pop('password')
@@ -19,7 +19,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
-    phone = serializers.CharField(max_length=50)
+    email = serializers.CharField(max_length=50)
     password = serializers.CharField(max_length=50)
 
 
@@ -57,7 +57,7 @@ class UserEditSerialzier(serializers.ModelSerializer):
     class Meta:
         model = User
 
-        fields = ['first_name', 'last_name', 'middle_name', 'phone', 'image', 'birth_date']
+        fields = ['first_name', 'last_name', 'title', 'language', 'location', 'password',  'avatar', 'description']
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -66,7 +66,7 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ['id','first_name', 'last_name','middle_name', 'phone', 'image', 'birth_date']
+        fields = ['id','first_name', 'last_name', 'title', 'language', 'location','password','email', 'avatar', 'description']
 
 
     # def get_image_url(self, obj):

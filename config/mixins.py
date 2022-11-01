@@ -2,19 +2,19 @@ from .responses import ResponseSuccess
 
 
 class ListAPIViewResponseMixin:
-    field = '-'
+    
 
     def list(self, request, *args, **kwargs):
         result = super().list(request, *args, **kwargs)
-        return ResponseSuccess({self.field: result.data})
+        return ResponseSuccess(result.data)
 
 
 class RetrieveAPIViewResponseMixin:
-    field = '-'
+    
 
     def get(self, request, *args, **kwargs):
         result = super().get(request, *args, **kwargs)
-        return ResponseSuccess({self.field: result.data})
+        return ResponseSuccess(result.data)
 
 
 class CreateAPIViewResponseMixin:
@@ -33,7 +33,7 @@ class CreateAPIViewResponseMixin:
 
 
 class UpdateAPIViewResponseMixin:
-    field = '-'
+    ield = '-'
 
     def put(self, request, *args, **kwargs):
         super().put(request, *args, **kwargs)
@@ -45,7 +45,7 @@ class UpdateAPIViewResponseMixin:
 
 
 class DestroyAPIViewResponseMixin:
-    field = '-'
+    
 
     def delete(self, request, *args, **kwargs):
         super().delete(request, *args, **kwargs)
